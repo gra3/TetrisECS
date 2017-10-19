@@ -7,7 +7,7 @@
 int main()
 {
 	sf::RenderWindow window( sf::VideoMode( 500, 800 ), "Tetris" );
-	TetrisBoard board( sf::Rect< float >( 100, 100, 300, 590 ), &window );
+	TetrisBoard board( sf::Vector2f( 300, 590 ), &window );
 
 	sf::Clock clock;
 	clock.restart();

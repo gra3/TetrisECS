@@ -6,7 +6,7 @@ class ITetrimino :
 	public Tetrimino
 {
 public:
-	ITetrimino( const sf::Rect< float >& rect, sf::RenderWindow* window );
+	ITetrimino( const BoardPositionComponent& boardPosition, const sf::Vector2f& size, sf::RenderWindow* window );
 
 	//Tetrimino contract
 	virtual void InitTetrimino() override;

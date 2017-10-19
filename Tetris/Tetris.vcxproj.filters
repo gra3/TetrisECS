@@ -57,6 +57,9 @@
     <ClCompile Include="ZTetrimino.cpp">
       <Filter>Source Files\Tetriminos</Filter>
     </ClCompile>
+    <ClCompile Include="BoardPositionComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="ZTetrimino.h">
       <Filter>Header Files\Tetriminos</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardPositionComponent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tetrimino.h">
       <Filter>Header Files</Filter>

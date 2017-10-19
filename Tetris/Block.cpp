@@ -1,7 +1,8 @@
 #include "Block.h"
 
-Block::Block( const sf::Rect< float > rect, sf::RenderWindow* window ) :
-	GameObject{ rect, window },
+Block::Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size, sf::RenderWindow* window ):
+	GameObject{ size, window },
+	boardPosition{ initialBoardPosition },
 	active{ false },
 	color{ TetriminoColors::Blue }
 {
@@ -27,8 +28,8 @@ void Block::Draw()
 	if ( active )
 	{
 		sf::RectangleShape block( sf::Vector2f( GetWidth(), GetHeight() ) );
-		block.setFillColor( GetBlockColor() );
-		block.setPosition( sf::Vector2f( GetX(), GetY() ) );
+		//block.setFillColor( GetBlockColor() );
+		//block.setPosition( sf::Vector2f( GetX(), GetY() ) );
 
 		auto renderWindow = GetRenderWindow();
 		renderWindow->draw( block );

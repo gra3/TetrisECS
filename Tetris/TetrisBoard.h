@@ -11,9 +11,9 @@ class TetrisBoard :
 	public GameObject
 {
 public:
-	TetrisBoard( const sf::Rect< float >& size, sf::RenderWindow* window );
+	TetrisBoard( const sf::Vector2f& size, sf::RenderWindow* window );
 
-	void InitBoardArray();
+	void InitBlockArray();
 
 	//GameObject contract
 	virtual void Draw() override;
@@ -24,7 +24,6 @@ private:
 	const int boardHeightInBlocks = 20;
 	const float borderThickness = 5;
 	std::vector< std::vector< Block > > blockArray;
-	std::unique_ptr< Tetrimino > activeTetrimino;
 
 	void DrawBorder();
 	void DrawGrid();
@@ -32,6 +31,8 @@ private:
 
 	float GetBlockWidth();
 	float GetBlockHeight();
+
+	BoardPositionComponent GetStartingTetriminoBoardPosition() const;
 
 };
 

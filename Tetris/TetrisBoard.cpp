@@ -1,3 +1,4 @@
+#include "BoardPositionComponent.h"
 #include "ITetrimino.h"
 #include "LTetrimino.h"
 #include "JTetrimino.h"
@@ -8,29 +9,25 @@
 
 #include "TetrisBoard.h"
 
-TetrisBoard::TetrisBoard( const sf::Rect< float >& size, sf::RenderWindow* window ) :
+TetrisBoard::TetrisBoard( const sf::Vector2f& size, sf::RenderWindow* window ) :
 	GameObject( size, window )
 {
-	InitBoardArray();
+	InitBlockArray();
 
-	auto tetriminoSize = GetBlockWidth() * 4;
-	auto x = GetX() + 3 * GetBlockWidth() + borderThickness;
-	auto y = GetY() + borderThickness;
-	sf::Rect< float > tetriminoRect( x, y, tetriminoSize, tetriminoSize );
-	activeTetrimino = std::make_unique< ZTetrimino >( tetriminoRect, window );
+	auto tetriminoSize = sf::Vector2f( GetBlockWidth() * 4, GetBlockHeight() * 4 );
+	LTetrimino testrimino( GetStartingTetriminoBoardPosition(), tetriminoSize, window );
 }
 
-void TetrisBoard::InitBoardArray()
+void TetrisBoard::InitBlockArray()
 {
 	blockArray.resize( boardWidthInBlocks );
-	for ( int i = 0; i < blockArray.size(); i++ )
+	for ( int x = 0; x < blockArray.size(); x++ )
 	{
-		for ( int j = 0; j < boardHeightInBlocks; j++ )
+		for ( int y = 0; y < boardHeightInBlocks; y++ )
 		{
-			auto x = GetX() + borderThickness + ( GetBlockWidth() * i );
-			auto y = GetY() + borderThickness + ( GetBlockHeight() * j );
-			sf::Rect< float > blockRect( x, y, GetBlockWidth(), GetBlockHeight() );
-			blockArray[i].emplace_back( Block( blockRect, GetRenderWindow() ) );
+			auto boardPosition = BoardPositionComponent( sf::Vector2i( x, y ) );
+			auto size = sf::Vector2f( GetBlockWidth(), GetBlockHeight() );
+			blockArray[ x ].emplace_back( Block( boardPosition, size, GetRenderWindow() ) );
 		}
 	}
 }
@@ -39,19 +36,17 @@ void TetrisBoard::Draw()
 {
 	DrawBorder();
 	DrawBlocks();
-	activeTetrimino->Draw();
 	DrawGrid();
 }
 
 void TetrisBoard::Update( const sf::Time& elapsedTime )
 {
-	activeTetrimino->Update(  elapsedTime );
 }
 
 void TetrisBoard::DrawBorder()
 {
 	sf::RectangleShape outerBorder( sf::Vector2f( GetWidth(), GetHeight() ) );
-	outerBorder.setPosition( GetX(), GetY() );
+	//outerBorder.setPosition( GetX(), GetY() );
 	outerBorder.setFillColor( sf::Color::Black );
 	outerBorder.setOutlineThickness( borderThickness );
 	outerBorder.setOutlineColor( sf::Color::White );
@@ -74,8 +69,8 @@ void TetrisBoard::DrawGrid()
 			block.setOutlineThickness( 1 );
 			block.setOutlineColor( sf::Color::White );
 			sf::Vector2f blockPosition;
-			blockPosition.x = GetX() + borderThickness + ( blockWidth * i );
-			blockPosition.y = GetY() + borderThickness + ( blockHeight * j );
+			//blockPosition.x = GetX() + borderThickness + ( blockWidth * i );
+			//blockPosition.y = GetY() + borderThickness + ( blockHeight * j );
 			block.setPosition( blockPosition );
 
 			renderWindow->draw( block );
@@ -97,4 +92,9 @@ float TetrisBoard::GetBlockWidth()
 float TetrisBoard::GetBlockHeight()
 {
 	return ( GetHeight() - 2 * borderThickness ) / boardHeightInBlocks;
+}
+
+BoardPositionComponent TetrisBoard::GetStartingTetriminoBoardPosition() const
+{
+	return BoardPositionComponent( sf::Vector2i( 4, 0 ) );
 }

@@ -1,7 +1,8 @@
 #include "Tetrimino.h"
 
-Tetrimino::Tetrimino( const sf::Rect< float >& rect, sf::RenderWindow* window ) :
-	GameObject{ rect, window },
+Tetrimino::Tetrimino( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f& size, sf::RenderWindow* window ) :
+	GameObject{ size, window },
+	boardPosition{ initialBoardPosition },
 	timeToUpdate{ sf::seconds( 1.0 ) },
 	totalElapsedTime{ sf::Time::Zero }
 {
@@ -9,12 +10,11 @@ Tetrimino::Tetrimino( const sf::Rect< float >& rect, sf::RenderWindow* window ) 
 	for( int i = 0; i < widthInBlocks; i++ )
 		for ( int j = 0; j < heightInBlocks; j++ )
 		{
-			auto width = GetWidth() / widthInBlocks;
-			auto height = GetHeight() / heightInBlocks;
-			auto x = GetX() + width * i;
-			auto y = GetY() + height * j;
-			sf::Rect< float > blockRect( x, y, width, height );
-			tetriminoArray[ i ].emplace_back( blockRect, GetRenderWindow() );
+			auto x = boardPosition.GetX() + i;
+			auto y = boardPosition.GetY() + j;
+			BoardPositionComponent blockBoardPosition( sf::Vector2i( x, y ) );
+			sf::Vector2f size(  GetWidth() / 4, GetHeight() / 4 );
+			tetriminoArray[ i ].emplace_back( blockBoardPosition, size, GetRenderWindow() );
 		}
 }
 
@@ -30,14 +30,14 @@ void Tetrimino::Update( const sf::Time& elapsedTime )
 	totalElapsedTime += elapsedTime;
 	if ( totalElapsedTime >= timeToUpdate )
 	{
-		auto currentY = GetY();
-		SetY( currentY + GetHeight() );
-		for( auto& vec : tetriminoArray )
-			for ( auto& block : vec )
-			{
-				auto currentY = block.GetY();
-				block.SetY( currentY + block.GetHeight() );
-			}
+		//auto currentY = GetY();
+		//SetY( currentY + GetHeight() );
+		//for( auto& vec : tetriminoArray )
+		//	for ( auto& block : vec )
+		//	{
+		//		auto currentY = block.GetY();
+		//		block.SetY( currentY + block.GetHeight() );
+		//	}
 
 		totalElapsedTime -= timeToUpdate;
 	}

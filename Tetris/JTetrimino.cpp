@@ -1,7 +1,7 @@
 #include "JTetrimino.h"
 
-JTetrimino::JTetrimino( const sf::Rect< float >& rect, sf::RenderWindow* window ):
-	Tetrimino( rect, window )
+JTetrimino::JTetrimino( const BoardPositionComponent& boardPosition, const sf::Vector2f& size, sf::RenderWindow* window ):
+	Tetrimino( boardPosition, size, window )
 {
 	InitTetrimino();
 }

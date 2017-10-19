@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BoardPositionComponent.h"
 #include "GameObject.h"
 #include "TetriminoColors.h"
 
@@ -7,7 +8,7 @@ class Block :
 	public GameObject
 {
 public:
-	Block( const sf::Rect< float > rect, sf::RenderWindow* window );
+	Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size, sf::RenderWindow* window );
 
 	void SetColor( TetriminoColors color );
 	void Activate();
@@ -18,6 +19,7 @@ public:
 	virtual void Update( const sf::Time& elapsedTime ) override;
 
 private:
+	BoardPositionComponent boardPosition;
 	bool active;
 	TetriminoColors color;
 
