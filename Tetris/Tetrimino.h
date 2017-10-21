@@ -10,10 +10,9 @@ class Tetrimino :
 	public GameObject
 {
 public:
-	Tetrimino( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f& size, sf::RenderWindow* window );
+	Tetrimino( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f& size );
 
 	//GameObject contract
-	virtual void Draw() override;
 	virtual void Update( const sf::Time& elapsedTime ) override;
 
 protected:

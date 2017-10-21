@@ -113,31 +113,41 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BoardGraphicsComponent.cpp" />
     <ClCompile Include="BoardPositionComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="JTetrimino.cpp" />
     <ClCompile Include="ITetrimino.cpp" />
     <ClCompile Include="LTetrimino.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="OTetrimino.cpp" />
+    <ClCompile Include="PositionComponent.cpp" />
+    <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="STetrimino.cpp" />
     <ClCompile Include="Tetrimino.cpp" />
     <ClCompile Include="TetrisBoard.cpp" />
+    <ClCompile Include="TetrisGame.cpp" />
     <ClCompile Include="TTetrimino.cpp" />
     <ClCompile Include="ZTetrimino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BoardGraphicsComponent.h" />
     <ClInclude Include="BoardPositionComponent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="JTetrimino.h" />
     <ClInclude Include="ITetrimino.h" />
     <ClInclude Include="LTetrimino.h" />
     <ClInclude Include="OTetrimino.h" />
+    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="STetrimino.h" />
     <ClInclude Include="Tetrimino.h" />
     <ClInclude Include="TetriminoColors.h" />
     <ClInclude Include="TetrisBoard.h" />
+    <ClInclude Include="TetrisGame.h" />
     <ClInclude Include="TTetrimino.h" />
     <ClInclude Include="ZTetrimino.h" />
   </ItemGroup>

@@ -1,26 +1,26 @@
 #include "BoardPositionComponent.h"
 
-BoardPositionComponent::BoardPositionComponent( const sf::Vector2i& startingPosition ):
-	position{ startingPosition }
+BoardPositionComponent::BoardPositionComponent( const sf::Vector2i& startingPosition ) :
+	PositionComponent{ static_cast< sf::Vector2f >( startingPosition ) }
 {
 }
 
 sf::Vector2i BoardPositionComponent::GetPosition() const
 {
-	return position;
+	return static_cast< sf::Vector2i >( position );
 }
 
 void BoardPositionComponent::SetPosition( const sf::Vector2i& newPosition )
 {
-	position = newPosition;
+	position = static_cast< sf::Vector2f >( newPosition );
 }
 
 int BoardPositionComponent::GetX() const
 {
-	return position.x;
+	return static_cast< int >( position.x );
 }
 
 int BoardPositionComponent::GetY() const
 {
-	return position.y;
+	return static_cast< int >( position.y );
 }

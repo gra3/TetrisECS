@@ -8,14 +8,13 @@ class Block :
 	public GameObject
 {
 public:
-	Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size, sf::RenderWindow* window );
+	Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size );
 
 	void SetColor( TetriminoColors color );
 	void Activate();
 	void Deactivate();
 
 	//GameObject contract
-	virtual void Draw() override;
 	virtual void Update( const sf::Time& elapsedTime ) override;
 
 private:

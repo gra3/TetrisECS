@@ -1,10 +1,8 @@
 #include "Block.h"
 
-Block::Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size, sf::RenderWindow* window ):
-	GameObject{ size, window },
-	boardPosition{ initialBoardPosition },
-	active{ false },
-	color{ TetriminoColors::Blue }
+Block::Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size ):
+	GameObject{ size },
+	boardPosition{ initialBoardPosition }
 {
 }
 
@@ -21,19 +19,6 @@ void Block::Activate()
 void Block::Deactivate()
 {
 	active = false;
-}
-
-void Block::Draw()
-{
-	if ( active )
-	{
-		sf::RectangleShape block( sf::Vector2f( GetWidth(), GetHeight() ) );
-		//block.setFillColor( GetBlockColor() );
-		//block.setPosition( sf::Vector2f( GetX(), GetY() ) );
-
-		auto renderWindow = GetRenderWindow();
-		renderWindow->draw( block );
-	}
 }
 
 void Block::Update( const sf::Time& elapsedTime )
