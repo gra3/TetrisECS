@@ -115,6 +115,7 @@
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="BoardGraphicsComponent.cpp" />
     <ClCompile Include="BoardPositionComponent.cpp" />
+    <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="JTetrimino.cpp" />
@@ -135,6 +136,8 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="BoardGraphicsComponent.h" />
     <ClInclude Include="BoardPositionComponent.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentIDs.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicsComponent.h" />
     <ClInclude Include="JTetrimino.h" />

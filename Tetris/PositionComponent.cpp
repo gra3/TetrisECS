@@ -19,3 +19,8 @@ float PositionComponent::Gety() const
 {
 	return position.y;
 }
+
+ComponentID PositionComponent::GetComponentID() const
+{
+	return Position;
+}

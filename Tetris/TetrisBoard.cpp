@@ -10,9 +10,7 @@
 #include "TetrisBoard.h"
 
 TetrisBoard::TetrisBoard( const sf::Vector2f& size, sf::RenderWindow* window ) :
-	GameObject( size ),
-	positionComponent{ sf::Vector2f( 100, 105 ) },
-	boardGraphicsComponent{ this }
+	GameObject( size )
 {
 	InitBlockArray();
 

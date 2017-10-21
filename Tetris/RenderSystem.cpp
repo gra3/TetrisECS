@@ -1,3 +1,4 @@
+#include "Component.h"
 #include "TetrisBoard.h"
 
 #include "RenderSystem.h"
@@ -11,11 +12,14 @@ void RenderSystem::Render( std::vector< std::unique_ptr< GameObject > >& gameObj
 {
 	for ( auto& obj : gameObjects )
 	{
-		auto tetrisBoard = dynamic_cast< TetrisBoard* >( obj.get() );
-		if ( tetrisBoard != nullptr )
+		auto componentMask = obj->GetComponentMask();
+		auto hasPositionComponent = componentMask & ( Position | Graphics );
+		auto hasGraphicsComponent = componentMask & Graphics;
+
+		if ( hasPositionComponent && hasGraphicsComponent )
 		{
-			auto position = tetrisBoard->GetPositionComponent();
-			auto graphics = tetrisBoard->GetGraphicsComponent();
+			auto position = dynamic_cast< PositionComponent* >( obj->GetComponent( Position ) );
+			auto graphics = dynamic_cast< GraphicsComponent* >( obj->GetComponent( Graphics ) );
 
 			auto sprite = graphics->GetSprite();
 			sprite->setPosition( position->GetPosition() );

@@ -10,3 +10,8 @@ sf::Sprite* GraphicsComponent::GetSprite() const
 {
 	return sprite.get();
 }
+
+ComponentID GraphicsComponent::GetComponentID() const
+{
+	return Graphics;
+}

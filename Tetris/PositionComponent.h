@@ -2,7 +2,10 @@
 
 #include "SFML\System.hpp"
 
-class PositionComponent
+#include "Component.h"
+
+class PositionComponent:
+	public Component
 {
 
 public:
@@ -11,6 +14,9 @@ public:
 	sf::Vector2f GetPosition() const;
 	float GetX() const;
 	float Gety() const;
+
+	//Component contract
+	virtual ComponentID GetComponentID() const override;
 	
 protected:
 	sf::Vector2f position;
