@@ -1,9 +1,7 @@
 #include "GameObject.h"
 
-GameObject::GameObject( const sf::Vector2f& size ) :
-	componentMask{ 0 },
-	width{ size.x },
-	height{ size.y }
+GameObject::GameObject() :
+	componentMask{ 0 }
 {
 }
 
@@ -30,14 +28,4 @@ Component* GameObject::GetComponent( ComponentID componentID ) const
 	}
 
 	return desiredComponent;
-}
-
-float GameObject::GetWidth() const
-{
-	return width;
-}
-
-float GameObject::GetHeight() const
-{
-	return height;
 }

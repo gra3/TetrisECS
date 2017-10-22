@@ -5,14 +5,17 @@
 
 #include "GameObject.h"
 
+class TetrisGame;
+
 class RenderSystem
 {
 public:
-	RenderSystem( sf::RenderWindow* renderWindow );
+	RenderSystem( TetrisGame* tetrisGame, sf::RenderWindow* renderWindow );
 
-	void Render( std::vector< std::unique_ptr< GameObject > >& gameObjects );
+	void Render( std::vector< std::vector< std::unique_ptr< GameObject > > >& gameObjects );
 
 private:
 	sf::RenderWindow* renderWindow;
+	TetrisGame* tetrisGame;
 };
 

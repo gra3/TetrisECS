@@ -15,7 +15,7 @@ float PositionComponent::GetX() const
 	return position.x;
 }
 
-float PositionComponent::Gety() const
+float PositionComponent::GetY() const
 {
 	return position.y;
 }

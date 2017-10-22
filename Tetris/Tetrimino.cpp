@@ -1,21 +1,21 @@
 #include "Tetrimino.h"
 
 Tetrimino::Tetrimino( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f& size ):
-	GameObject{ size },
+	GameObject{},
 	boardPosition{ initialBoardPosition },
 	timeToUpdate{ sf::seconds( 1.0 ) },
 	totalElapsedTime{ sf::Time::Zero }
 {
-	tetriminoArray.resize( widthInBlocks );
-	for( int i = 0; i < widthInBlocks; i++ )
-		for ( int j = 0; j < heightInBlocks; j++ )
-		{
-			auto x = boardPosition.GetX() + i;
-			auto y = boardPosition.GetY() + j;
-			BoardPositionComponent blockBoardPosition( sf::Vector2i( x, y ) );
-			sf::Vector2f size(  GetWidth() / 4, GetHeight() / 4 );
-			tetriminoArray[ i ].emplace_back( blockBoardPosition, size );
-		}
+	//tetriminoArray.resize( widthInBlocks );
+	//for( int i = 0; i < widthInBlocks; i++ )
+	//	for ( int j = 0; j < heightInBlocks; j++ )
+	//	{
+	//		auto x = boardPosition.GetX() + i;
+	//		auto y = boardPosition.GetY() + j;
+	//		BoardPositionComponent blockBoardPosition( sf::Vector2i( x, y ) );
+	//		sf::Vector2f size(  GetWidth() / 4, GetHeight() / 4 );
+	//		tetriminoArray[ i ].emplace_back( blockBoardPosition, size );
+	//	}
 }
 
 void Tetrimino::Update( const sf::Time& elapsedTime )

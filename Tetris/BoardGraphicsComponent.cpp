@@ -4,9 +4,11 @@
 
 #include "BoardGraphicsComponent.h"
 
-BoardGraphicsComponent::BoardGraphicsComponent( TetrisBoard* board ):
+BoardGraphicsComponent::BoardGraphicsComponent( const sf::Vector2i size, int widthInBlocks, int heightInBlocks ) :
 	GraphicsComponent{},
-	tetrisBoard{ board }
+	boardSize{ size },
+	widthInBlocks{ widthInBlocks },
+	heightInBlocks{ heightInBlocks }
 {
 	LoadSprite();
 }
@@ -14,10 +16,7 @@ BoardGraphicsComponent::BoardGraphicsComponent( TetrisBoard* board ):
 void BoardGraphicsComponent::LoadSprite()
 {
 	sf::RenderTexture renderTexture;
-	auto boardWidth = static_cast< UINT >( tetrisBoard->GetWidth() );
-	auto boardHeight = static_cast< UINT >( tetrisBoard->GetHeight() );
-	sf::Vector2i boardSize( boardWidth, boardHeight );
-	renderTexture.create( boardWidth, boardHeight );
+	renderTexture.create( boardSize.x, boardSize.y );
 
 	DrawBorder( &renderTexture );
 	DrawGrid( &renderTexture );
@@ -46,11 +45,12 @@ void BoardGraphicsComponent::DrawGrid( sf::RenderTexture* renderTexture ) const
 	auto textureSize = renderTexture->getSize();
 	auto boardWidth = textureSize.x;
 	auto boardHeight = textureSize.y;
-	auto blockWidth = tetrisBoard->GetBlockWidth();
-	auto blockHeight = tetrisBoard->GetBlockHeight();
 
-	for ( int i = 0; i < tetrisBoard->GetBoardWidthInBlocks(); i++ )
-		for ( int j = 0; j < tetrisBoard->GetBoardHeightInBlocks(); j++ )
+	auto blockWidth = ( boardSize.x - 2 * borderThickness ) / widthInBlocks;
+	auto blockHeight = ( boardSize.y - 2 * borderThickness ) / heightInBlocks;
+
+	for ( int i = 0; i < widthInBlocks; i++ )
+		for ( int j = 0; j < heightInBlocks; j++ )
 		{
 			sf::RectangleShape block( sf::Vector2f( blockWidth, blockHeight ) );
 			block.setFillColor( sf::Color::Transparent );

@@ -8,7 +8,7 @@ class Block :
 	public GameObject
 {
 public:
-	Block( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f size );
+	Block();
 
 	void SetColor( TetriminoColors color );
 	void Activate();
@@ -18,10 +18,7 @@ public:
 	virtual void Update( const sf::Time& elapsedTime ) override;
 
 private:
-	BoardPositionComponent boardPosition;
 	bool active;
 	TetriminoColors color;
-
-	sf::Color GetBlockColor() const;
 };
 

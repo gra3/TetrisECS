@@ -13,7 +13,7 @@ public:
 
 	sf::Vector2f GetPosition() const;
 	float GetX() const;
-	float Gety() const;
+	float GetY() const;
 
 	//Component contract
 	virtual ComponentID GetComponentID() const override;

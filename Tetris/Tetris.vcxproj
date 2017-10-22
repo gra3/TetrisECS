@@ -113,6 +113,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BlockGraphicsComponent.cpp" />
     <ClCompile Include="BoardGraphicsComponent.cpp" />
     <ClCompile Include="BoardPositionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -134,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
+    <ClInclude Include="BlockGraphicsComponent.h" />
     <ClInclude Include="BoardGraphicsComponent.h" />
     <ClInclude Include="BoardPositionComponent.h" />
     <ClInclude Include="Component.h" />

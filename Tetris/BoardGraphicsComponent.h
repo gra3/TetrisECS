@@ -10,14 +10,18 @@ class BoardGraphicsComponent:
 	public GraphicsComponent
 {
 public:
-	BoardGraphicsComponent( TetrisBoard* board );
+	BoardGraphicsComponent( const sf::Vector2i size, int widthInBlocks, int heightInBlocks );
 
 private:
 	const float borderThickness = 5;
 
-	TetrisBoard* tetrisBoard;
+	sf::Vector2i boardSize;
+	int widthInBlocks;
+	int heightInBlocks;
 
-	virtual void LoadSprite();
 	void DrawBorder( sf::RenderTexture* renderTexture ) const;
 	void DrawGrid( sf::RenderTexture* renderTexture ) const;
+
+	//GraphicsComponent contract
+	virtual void LoadSprite() override;
 };
