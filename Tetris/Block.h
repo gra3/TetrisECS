@@ -10,15 +10,7 @@ class Block :
 public:
 	Block();
 
-	void SetColor( TetriminoColors color );
-	void Activate();
-	void Deactivate();
-
 	//GameObject contract
 	virtual void Update( const sf::Time& elapsedTime ) override;
-
-private:
-	bool active;
-	TetriminoColors color;
 };
 

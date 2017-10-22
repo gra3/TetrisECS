@@ -40,5 +40,5 @@ void Tetrimino::Update( const sf::Time& elapsedTime )
 void Tetrimino::ActivateBlock( int x, int y, TetriminoColors color )
 {
 	tetriminoArray[ x ][ y ].Activate();
-	tetriminoArray[ x ][ y ].SetColor( color );
+	//tetriminoArray[ x ][ y ].SetColor( color );
 }

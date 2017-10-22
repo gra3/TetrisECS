@@ -1,7 +1,8 @@
 #include "GameObject.h"
 
 GameObject::GameObject() :
-	componentMask{ 0 }
+	componentMask{ 0 },
+	isActive{ false }
 {
 }
 
@@ -28,4 +29,19 @@ Component* GameObject::GetComponent( ComponentID componentID ) const
 	}
 
 	return desiredComponent;
+}
+
+void GameObject::Activate()
+{
+	isActive = true;
+}
+
+void GameObject::Deactivate()
+{
+	isActive = false;
+}
+
+bool GameObject::IsActive() const
+{
+	return isActive;
 }

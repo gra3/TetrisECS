@@ -62,6 +62,8 @@ void TetrisGame::CreateTetrisBoard()
 	auto graphicsComponent = std::make_unique< BoardGraphicsComponent >( boardSize, boardWidthInBlocks, boardHeightInBlocks );
 	tetrisBoard->AddComponent( std::move( graphicsComponent ) );
 
+	tetrisBoard->Activate();
+
 	gameObjects[ Top ].emplace_back( std::move( tetrisBoard ) );
 }
 
@@ -82,7 +84,8 @@ void TetrisGame::CreateBlocks()
 			auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( blockSize, TetriminoColors::Blue );
 			block->AddComponent( std::move( blockGraphicsComponent ) );
 
-			block->Activate();
+			if( x == 2 )
+				block->Activate();
 
 			gameObjects[ Bottom ].emplace_back( std::move( block ) );
 		}
