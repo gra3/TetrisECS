@@ -6,7 +6,7 @@ class JTetrimino :
 	public Tetrimino
 {
 public:
-	JTetrimino( const BoardPositionComponent& boardPosition, const sf::Vector2f& size );
+	JTetrimino();
 
 	//Tetrimino contract
 	virtual void InitTetrimino() override;

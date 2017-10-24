@@ -10,7 +10,7 @@ class Tetrimino :
 	public GameObject
 {
 public:
-	Tetrimino( const BoardPositionComponent& initialBoardPosition, const sf::Vector2f& size );
+	Tetrimino();
 
 	//GameObject contract
 	virtual void Update( const sf::Time& elapsedTime ) override;
@@ -18,14 +18,8 @@ public:
 protected:
 	std::vector< std::vector< Block > > tetriminoArray;
 	virtual void InitTetrimino() = 0;
-	void ActivateBlock( int x, int y, TetriminoColors color );
 
 private:
-	const int widthInBlocks = 4;
-	const int heightInBlocks = 4;
-
-	BoardPositionComponent boardPosition;
-
 	sf::Time timeToUpdate;
 	sf::Time totalElapsedTime;
 };

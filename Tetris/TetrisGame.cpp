@@ -1,9 +1,11 @@
 #include <memory>
 
 #include "Block.h"
+#include "BlockContainerComponent.h"
 #include "BlockGraphicsComponent.h"
 #include "BoardGraphicsComponent.h"
 #include "Component.h"
+#include "LTetrimino.h"
 #include "PositionComponent.h"
 #include "RenderSystem.h"
 #include "TetriminoColors.h"
@@ -13,8 +15,9 @@
 
 TetrisGame::TetrisGame():
 	renderWindow{ std::make_unique< sf::RenderWindow >( sf::VideoMode( 500, 800 ), "Tetris" ) },
+	boardSize{ 300, 600 },
 	boardStartingPosition{ 100, 100 },
-	boardSize{ 300, 600 }
+	tetriminoStartingPosition{ 3, 0 }
 {
 	gameObjects.resize( 2 );
 }
@@ -23,6 +26,7 @@ void TetrisGame::Start()
 {
 	CreateTetrisBoard();
 	CreateBlocks();
+	CreateTetrimino();
 
 	RenderSystem renderSystem( this, renderWindow.get() );
 
@@ -84,15 +88,38 @@ void TetrisGame::CreateBlocks()
 			auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( blockSize, TetriminoColors::Blue );
 			block->AddComponent( std::move( blockGraphicsComponent ) );
 
-			if( x == 2 )
-				block->Activate();
-
 			gameObjects[ Bottom ].emplace_back( std::move( block ) );
 		}
 	}
 }
 
+void TetrisGame::CreateTetrimino()
+{
+	auto tetrimino = std::make_unique< LTetrimino >();
+
+	auto blockContainer = std::make_unique< BlockContainerComponent >( tetriminoStartingPosition, sf::Vector2i( 4, 4 ) );
+	for( int i = 0; i < 4; i++ )
+		for ( int j = 0; j < 4; j++ )
+		{
+			blockContainer->AddBlockGraphicComponent( sf::Vector2i( i, j ), GetBlockSize(), Blue );
+			if ( j == 0 )
+				blockContainer->ActivateBlock( sf::Vector2i( i, j ) );
+		}
+	tetrimino->AddComponent( std::move( blockContainer ) );
+	tetrimino->Activate();
+
+	gameObjects[ Bottom ].emplace_back( std::move( tetrimino ) );
+	
+
+}
+
 sf::Vector2f TetrisGame::GetStartingPosition() const
 {
 	return boardStartingPosition;
+}
+
+sf::Vector2f TetrisGame::GetBlockSize() const
+{
+	return sf::Vector2f( static_cast< float >( boardSize.x / boardWidthInBlocks ), 
+								static_cast< float >( boardSize.y / boardHeightInBlocks ) );
 }
