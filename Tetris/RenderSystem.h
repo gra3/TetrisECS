@@ -17,5 +17,12 @@ public:
 private:
 	sf::RenderWindow* renderWindow;
 	TetrisGame* tetrisGame;
+
+	bool HasPositionAndGraphicsComponent( GameObject* object ) const;
+	bool HasContainerComponent( GameObject* object ) const;
+
+	void DrawGameObject( GameObject* obj );
+
+	void DrawAllContainedGameObjects( GameObject* obj );
 };
 

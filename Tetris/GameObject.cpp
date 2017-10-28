@@ -2,7 +2,7 @@
 
 GameObject::GameObject() :
 	componentMask{ 0 },
-	isActive{ false }
+	isActive{ true }
 {
 }
 

@@ -17,66 +17,62 @@ void RenderSystem::Render( std::vector< std::vector< std::unique_ptr< GameObject
 	{
 		for ( auto& obj : layer )
 		{
-			if ( obj->IsActive() )
-			{
-				auto componentMask = obj->GetComponentMask();
-				auto hasPositionComponent = componentMask & Position;
-				auto hasGraphicsComponent = componentMask & Graphics;
-				auto hasContainerComponent = componentMask & Container;
+			DrawGameObject( obj.get() );
 
-				if ( hasPositionComponent && hasGraphicsComponent )
-				{
-					auto position = dynamic_cast< PositionComponent* >( obj->GetComponent( Position ) );
-					auto x = position->GetX();
-					auto y = position->GetY();
-
-					auto graphics = dynamic_cast< GraphicsComponent* >( obj->GetComponent( Graphics ) );
-					auto sprite = graphics->GetSprite();
-
-					auto boardPosition = dynamic_cast< BoardPositionComponent* >( position );
-					auto startingPosition = tetrisGame->GetStartingPosition();
-					if ( boardPosition != nullptr )
-					{
-						x = startingPosition.x + boardPosition->GetX() * sprite->getTextureRect().width;
-						y = startingPosition.y + boardPosition->GetY() * sprite->getTextureRect().height;
-					}
-
-					sprite->setPosition( sf::Vector2f( x, y ) );
-
-					renderWindow->draw( *sprite );
-
-				}
-				else if ( hasContainerComponent )
-				{
-					auto blockContainer = dynamic_cast< BlockContainerComponent* >( obj->GetComponent( Container ) );
-					auto blocks = blockContainer->GetBlocks();
-					for( auto& vec : *blocks )
-						for ( auto& block : vec )
-						{
-							if ( block.IsActive() )
-							{
-								auto position = dynamic_cast< PositionComponent* >( block.GetComponent( Position ) );
-								auto x = position->GetX();
-								auto y = position->GetY();
-
-								auto graphics = dynamic_cast< GraphicsComponent* >( block.GetComponent( Graphics ) );
-								auto sprite = graphics->GetSprite();
-
-								auto boardPosition = dynamic_cast< BoardPositionComponent* >( position );
-								auto startingPosition = tetrisGame->GetStartingPosition();
-								if ( boardPosition != nullptr )
-								{
-									x = startingPosition.x + boardPosition->GetX() * sprite->getTextureRect().width;
-									y = startingPosition.y + boardPosition->GetY() * sprite->getTextureRect().height;
-								}
-
-								sprite->setPosition( sf::Vector2f( x, y ) );
-
-								renderWindow->draw( *sprite );
-							}
-						}
-				}
-			}
+			DrawAllContainedGameObjects( obj.get() );
 		}
+	}
+}
+
+bool RenderSystem::HasPositionAndGraphicsComponent( GameObject* object ) const
+{
+	auto componentMask = object->GetComponentMask();
+	auto hasPositionComponent = ( componentMask & Position ) > 0;
+	auto hasGraphicsComponent = ( componentMask & Graphics ) > 0;
+
+	return hasPositionComponent && hasGraphicsComponent;
+}
+
+bool RenderSystem::HasContainerComponent( GameObject* object ) const
+{
+	auto componentMask = object->GetComponentMask();
+	auto hasContainerComponent = ( componentMask & Container ) > 0;
+
+	return hasContainerComponent;
+}
+
+void RenderSystem::DrawGameObject( GameObject* obj )
+{
+	if ( HasPositionAndGraphicsComponent( obj ) )
+	{
+		auto position = dynamic_cast< PositionComponent* >( obj->GetComponent( Position ) );
+		auto x = position->GetX();
+		auto y = position->GetY();
+
+		auto graphics = dynamic_cast< GraphicsComponent* >( obj->GetComponent( Graphics ) );
+		auto sprite = graphics->GetSprite();
+
+		auto boardPosition = dynamic_cast< BoardPositionComponent* >( position );
+		auto startingPosition = tetrisGame->GetStartingPosition();
+		if ( boardPosition != nullptr )
+		{
+			x = startingPosition.x + boardPosition->GetX() * sprite->getTextureRect().width + 5 / 2;
+			y = startingPosition.y + boardPosition->GetY() * sprite->getTextureRect().height + 5 / 2;
+		}
+
+		sprite->setPosition( sf::Vector2f( x, y ) );
+
+		renderWindow->draw( *sprite );
+	}
+}
+
+void RenderSystem::DrawAllContainedGameObjects( GameObject* obj )
+{
+	if ( HasContainerComponent( obj ) )
+	{
+		auto blockContainer = dynamic_cast< BlockContainerComponent* >( obj->GetComponent( Container ) );
+		auto blocks = blockContainer->GetBlocks();
+		for ( auto& block : *blocks )
+			DrawGameObject( dynamic_cast< GameObject* >( block.get() ) );
 	}
 }

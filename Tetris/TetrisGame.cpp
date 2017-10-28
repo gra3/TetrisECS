@@ -4,6 +4,7 @@
 #include "BlockContainerComponent.h"
 #include "BlockGraphicsComponent.h"
 #include "BoardGraphicsComponent.h"
+#include "BoardPositionComponent.h"
 #include "Component.h"
 #include "LTetrimino.h"
 #include "PositionComponent.h"
@@ -25,7 +26,6 @@ TetrisGame::TetrisGame():
 void TetrisGame::Start()
 {
 	CreateTetrisBoard();
-	CreateBlocks();
 	CreateTetrimino();
 
 	RenderSystem renderSystem( this, renderWindow.get() );
@@ -71,40 +71,22 @@ void TetrisGame::CreateTetrisBoard()
 	gameObjects[ Top ].emplace_back( std::move( tetrisBoard ) );
 }
 
-void TetrisGame::CreateBlocks()
-{
-	for ( int x = 0; x < boardWidthInBlocks; x++ )
-	{
-		for ( int y = 0; y < boardHeightInBlocks; y++ )
-		{
-			auto block = std::make_unique< Block >();
-
-			auto boardPositionComponent = std::make_unique< BoardPositionComponent >( sf::Vector2i( x, y ) );
-			block->AddComponent( std::move( boardPositionComponent ) );
-
-			auto blockWidth = static_cast< float >( boardSize.x / boardWidthInBlocks );
-			auto blockHeight = static_cast< float >( boardSize.y / boardHeightInBlocks );
-			sf::Vector2f blockSize( blockWidth, blockHeight );
-			auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( blockSize, TetriminoColors::Blue );
-			block->AddComponent( std::move( blockGraphicsComponent ) );
-
-			gameObjects[ Bottom ].emplace_back( std::move( block ) );
-		}
-	}
-}
-
 void TetrisGame::CreateTetrimino()
 {
 	auto tetrimino = std::make_unique< LTetrimino >();
 
-	auto blockContainer = std::make_unique< BlockContainerComponent >( tetriminoStartingPosition, sf::Vector2i( 4, 4 ) );
-	for( int i = 0; i < 4; i++ )
-		for ( int j = 0; j < 4; j++ )
-		{
-			blockContainer->AddBlockGraphicComponent( sf::Vector2i( i, j ), GetBlockSize(), Blue );
-			if ( j == 0 )
-				blockContainer->ActivateBlock( sf::Vector2i( i, j ) );
-		}
+	auto blockContainer = std::make_unique< BlockContainerComponent >();
+	
+	auto block = std::make_unique< Block >();
+	auto blockPosition = tetriminoStartingPosition;
+	auto blockPositionComponent = std::make_unique< BoardPositionComponent >( blockPosition );
+	block->AddComponent( std::move( blockPositionComponent ) );
+	
+	auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( GetBlockSize(), Red );
+	block->AddComponent( std::move( blockGraphicsComponent ) );
+
+	blockContainer->AddBlock( std::move( block ) );
+
 	tetrimino->AddComponent( std::move( blockContainer ) );
 	tetrimino->Activate();
 

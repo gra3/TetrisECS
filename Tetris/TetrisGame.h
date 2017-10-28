@@ -14,7 +14,6 @@ public:
 	void Start();
 
 	void CreateTetrisBoard();
-	void CreateBlocks();
 	void CreateTetrimino();
 	sf::Vector2f GetStartingPosition() const;
 
