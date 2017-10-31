@@ -4,11 +4,11 @@
 
 #include "BoardGraphicsComponent.h"
 
-BoardGraphicsComponent::BoardGraphicsComponent( const sf::Vector2i size, int widthInBlocks, int heightInBlocks ) :
+BoardGraphicsComponent::BoardGraphicsComponent( const sf::Vector2i size, const sf::Vector2i& boardSizeInBlocks, int borderThickness ) :
 	GraphicsComponent{},
+	borderThickness{ static_cast< float >( borderThickness ) },
 	boardSize{ size },
-	widthInBlocks{ widthInBlocks },
-	heightInBlocks{ heightInBlocks }
+	boardSizeInBlocks{ boardSizeInBlocks }
 {
 	LoadSprite();
 }
@@ -46,11 +46,11 @@ void BoardGraphicsComponent::DrawGrid( sf::RenderTexture* renderTexture ) const
 	auto boardWidth = textureSize.x;
 	auto boardHeight = textureSize.y;
 
-	auto blockWidth = ( boardSize.x - 2 * borderThickness ) / widthInBlocks;
-	auto blockHeight = ( boardSize.y - 2 * borderThickness ) / heightInBlocks;
+	auto blockWidth = ( boardSize.x - 2 * borderThickness ) / boardSizeInBlocks.x;
+	auto blockHeight = ( boardSize.y - 2 * borderThickness ) / boardSizeInBlocks.y;
 
-	for ( int i = 0; i < widthInBlocks; i++ )
-		for ( int j = 0; j < heightInBlocks; j++ )
+	for ( int i = 0; i < boardSizeInBlocks.x; i++ )
+		for ( int j = 0; j < boardSizeInBlocks.y; j++ )
 		{
 			sf::RectangleShape block( sf::Vector2f( blockWidth, blockHeight ) );
 			block.setFillColor( sf::Color::Transparent );

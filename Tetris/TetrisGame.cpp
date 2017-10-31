@@ -63,7 +63,7 @@ void TetrisGame::CreateTetrisBoard()
 	auto positionComponent = std::make_unique< PositionComponent >( boardStartingPosition );
 	tetrisBoard->AddComponent( std::move( positionComponent ) );
 
-	auto graphicsComponent = std::make_unique< BoardGraphicsComponent >( boardSize, boardWidthInBlocks, boardHeightInBlocks );
+	auto graphicsComponent = std::make_unique< BoardGraphicsComponent >( boardSize, GetBoardSizeInBlocks(), GetBorderThickness() );
 	tetrisBoard->AddComponent( std::move( graphicsComponent ) );
 
 	gameObjects[ Top ].emplace_back( std::move( tetrisBoard ) );
@@ -84,6 +84,16 @@ sf::Vector2f TetrisGame::GetStartingPosition() const
 
 sf::Vector2f TetrisGame::GetBlockSize() const
 {
-	return sf::Vector2f( static_cast< float >( ( boardSize.x - 2 * 5 ) / boardWidthInBlocks ), 
-								static_cast< float >( ( boardSize.y - 2 * 5 ) / boardHeightInBlocks ) );
+	return sf::Vector2f( static_cast< float >( ( boardSize.x - 2 * borderThickness ) / boardWidthInBlocks ), 
+								static_cast< float >( ( boardSize.y - 2 * borderThickness ) / boardHeightInBlocks ) );
+}
+
+sf::Vector2i TetrisGame::GetBoardSizeInBlocks() const
+{
+	return sf::Vector2i( boardWidthInBlocks, boardHeightInBlocks );
+}
+
+int TetrisGame::GetBorderThickness() const
+{
+	return borderThickness;
 }

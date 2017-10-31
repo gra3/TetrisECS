@@ -15,7 +15,9 @@ public:
 
 	void CreateTetrisBoard();
 	void CreateTetrimino();
+
 	sf::Vector2f GetStartingPosition() const;
+	int GetBorderThickness() const;
 
 private:
 	enum Zorder
@@ -24,6 +26,7 @@ private:
 		Top
 	};
 
+	const int borderThickness = 5;
 	const int boardWidthInBlocks = 10;
 	const int boardHeightInBlocks = 20;
 
@@ -36,5 +39,6 @@ private:
 	std::vector< std::vector< std::unique_ptr< GameObject > > > gameObjects;
 
 	sf::Vector2f GetBlockSize() const;
+	sf::Vector2i GetBoardSizeInBlocks() const;
 };
 

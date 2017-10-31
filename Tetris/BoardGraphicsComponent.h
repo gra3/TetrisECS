@@ -10,14 +10,12 @@ class BoardGraphicsComponent:
 	public GraphicsComponent
 {
 public:
-	BoardGraphicsComponent( const sf::Vector2i size, int widthInBlocks, int heightInBlocks );
+	BoardGraphicsComponent( const sf::Vector2i size, const sf::Vector2i& boardSizeInBlocks, int borderThickness );
 
 private:
-	const float borderThickness = 5;
-
+	float borderThickness = 5;
 	sf::Vector2i boardSize;
-	int widthInBlocks;
-	int heightInBlocks;
+	sf::Vector2i boardSizeInBlocks;
 
 	void DrawBorder( sf::RenderTexture* renderTexture ) const;
 	void DrawGrid( sf::RenderTexture* renderTexture ) const;
