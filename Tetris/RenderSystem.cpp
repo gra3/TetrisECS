@@ -56,8 +56,8 @@ void RenderSystem::DrawGameObject( GameObject* obj )
 		auto startingPosition = tetrisGame->GetStartingPosition();
 		if ( boardPosition != nullptr )
 		{
-			x = startingPosition.x + boardPosition->GetX() * sprite->getTextureRect().width + 5 / 2;
-			y = startingPosition.y + boardPosition->GetY() * sprite->getTextureRect().height + 5 / 2;
+			x = startingPosition.x + boardPosition->GetX() * sprite->getTextureRect().width + 5;
+			y = startingPosition.y + boardPosition->GetY() * sprite->getTextureRect().height + 5;
 		}
 
 		sprite->setPosition( sf::Vector2f( x, y ) );

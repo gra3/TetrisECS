@@ -1,10 +1,9 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
-#include "Block.h"
-#include "BoardPositionComponent.h"
 #include "GameObject.h"
+#include "TetriminoColors.h"
+
+#include <SFML/Graphics.hpp>
 
 class Tetrimino :
 	public GameObject
@@ -15,9 +14,8 @@ public:
 	//GameObject contract
 	virtual void Update( const sf::Time& elapsedTime ) override;
 
-protected:
-	std::vector< std::vector< Block > > tetriminoArray;
-	virtual void InitTetrimino() = 0;
+	void CreateBlockContainer();
+	void AddBlock( const sf::Vector2f& size, const sf::Vector2i& boardPosition, TetriminoColors color );
 
 private:
 	sf::Time timeToUpdate;

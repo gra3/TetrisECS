@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Tetriminos">
-      <UniqueIdentifier>{07ab60d2-16ff-4441-950d-bf252de302ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Tetriminos">
-      <UniqueIdentifier>{cc15b609-68d2-4886-a3e4-2ad75b13d4bb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -35,27 +29,6 @@
     </ClCompile>
     <ClCompile Include="Tetrimino.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ITetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="JTetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="LTetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="OTetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="STetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="TTetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
-    </ClCompile>
-    <ClCompile Include="ZTetrimino.cpp">
-      <Filter>Source Files\Tetriminos</Filter>
     </ClCompile>
     <ClCompile Include="BoardPositionComponent.cpp">
       <Filter>Source Files</Filter>
@@ -84,6 +57,9 @@
     <ClCompile Include="BlockContainerComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TetriminoBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObject.h">
@@ -97,27 +73,6 @@
     </ClInclude>
     <ClInclude Include="Block.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ITetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="JTetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="LTetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="OTetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="STetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="TTetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
-    </ClInclude>
-    <ClInclude Include="ZTetrimino.h">
-      <Filter>Header Files\Tetriminos</Filter>
     </ClInclude>
     <ClInclude Include="BoardPositionComponent.h">
       <Filter>Header Files</Filter>
@@ -150,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BlockContainerComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TetriminoBuilder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

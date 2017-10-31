@@ -6,9 +6,9 @@
 #include "BoardGraphicsComponent.h"
 #include "BoardPositionComponent.h"
 #include "Component.h"
-#include "LTetrimino.h"
 #include "PositionComponent.h"
 #include "RenderSystem.h"
+#include "TetriminoBuilder.h"
 #include "TetriminoColors.h"
 #include "TetrisBoard.h"
 
@@ -66,33 +66,15 @@ void TetrisGame::CreateTetrisBoard()
 	auto graphicsComponent = std::make_unique< BoardGraphicsComponent >( boardSize, boardWidthInBlocks, boardHeightInBlocks );
 	tetrisBoard->AddComponent( std::move( graphicsComponent ) );
 
-	tetrisBoard->Activate();
-
 	gameObjects[ Top ].emplace_back( std::move( tetrisBoard ) );
 }
 
 void TetrisGame::CreateTetrimino()
 {
-	auto tetrimino = std::make_unique< LTetrimino >();
-
-	auto blockContainer = std::make_unique< BlockContainerComponent >();
-	
-	auto block = std::make_unique< Block >();
-	auto blockPosition = tetriminoStartingPosition;
-	auto blockPositionComponent = std::make_unique< BoardPositionComponent >( blockPosition );
-	block->AddComponent( std::move( blockPositionComponent ) );
-	
-	auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( GetBlockSize(), Red );
-	block->AddComponent( std::move( blockGraphicsComponent ) );
-
-	blockContainer->AddBlock( std::move( block ) );
-
-	tetrimino->AddComponent( std::move( blockContainer ) );
-	tetrimino->Activate();
-
+	auto position = sf::Vector2i( tetriminoStartingPosition.x, tetriminoStartingPosition.y );
+	TetriminoBuilder tetriminoBuilder( position, GetBlockSize() );
+	auto tetrimino = std::move( tetriminoBuilder.BuildTetrimino( TetriminoBuilder::TTetrimino ) );
 	gameObjects[ Bottom ].emplace_back( std::move( tetrimino ) );
-	
-
 }
 
 sf::Vector2f TetrisGame::GetStartingPosition() const
@@ -102,6 +84,6 @@ sf::Vector2f TetrisGame::GetStartingPosition() const
 
 sf::Vector2f TetrisGame::GetBlockSize() const
 {
-	return sf::Vector2f( static_cast< float >( boardSize.x / boardWidthInBlocks ), 
-								static_cast< float >( boardSize.y / boardHeightInBlocks ) );
+	return sf::Vector2f( static_cast< float >( ( boardSize.x - 2 * 5 ) / boardWidthInBlocks ), 
+								static_cast< float >( ( boardSize.y - 2 * 5 ) / boardHeightInBlocks ) );
 }
