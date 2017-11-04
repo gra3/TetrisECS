@@ -24,3 +24,8 @@ int BoardPositionComponent::GetY() const
 {
 	return static_cast< int >( position.y );
 }
+
+void BoardPositionComponent::SetY( int newY )
+{
+	position.y = newY;
+}

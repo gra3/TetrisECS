@@ -14,5 +14,6 @@ public:
 	void SetPosition( const sf::Vector2i& newPosition );
 	int GetX() const;
 	int GetY() const;
+	void SetY( int newY );
 };
 

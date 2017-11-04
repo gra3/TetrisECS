@@ -1,4 +1,5 @@
 #include <memory>
+#include <time.h>
 
 #include "Block.h"
 #include "BlockContainerComponent.h"
@@ -6,6 +7,7 @@
 #include "BoardGraphicsComponent.h"
 #include "BoardPositionComponent.h"
 #include "Component.h"
+#include "PhysicsSystem.h"
 #include "PositionComponent.h"
 #include "RenderSystem.h"
 #include "TetriminoBuilder.h"
@@ -16,7 +18,7 @@
 
 TetrisGame::TetrisGame():
 	renderWindow{ std::make_unique< sf::RenderWindow >( sf::VideoMode( 500, 800 ), "Tetris" ) },
-	boardSize{ 300, 600 },
+	boardSize{ 300, 590 },
 	boardStartingPosition{ 100, 100 },
 	tetriminoStartingPosition{ 3, 0 }
 {
@@ -25,10 +27,13 @@ TetrisGame::TetrisGame():
 
 void TetrisGame::Start()
 {
+	srand( static_cast< int >( time( nullptr ) ) );
+
 	CreateTetrisBoard();
 	CreateTetrimino();
 
 	RenderSystem renderSystem( this, renderWindow.get() );
+	PhysicsSystem physicsSystem;
 
 	sf::Clock clock;
 	clock.restart();
@@ -47,6 +52,8 @@ void TetrisGame::Start()
 			if ( event.type == sf::Event::Closed )
 				renderWindow->close();
 		}
+
+		physicsSystem.DoPhysics( gameObjects, elaspedTime );
 
 		renderSystem.Render( gameObjects );
 
@@ -71,9 +78,10 @@ void TetrisGame::CreateTetrisBoard()
 
 void TetrisGame::CreateTetrimino()
 {
+	auto randomTetrimino = static_cast< TetriminoBuilder::TetriminoType >( rand() % 6 );
 	auto position = sf::Vector2i( tetriminoStartingPosition.x, tetriminoStartingPosition.y );
 	TetriminoBuilder tetriminoBuilder( position, GetBlockSize() );
-	auto tetrimino = std::move( tetriminoBuilder.BuildTetrimino( TetriminoBuilder::TTetrimino ) );
+	auto tetrimino = std::move( tetriminoBuilder.BuildTetrimino( randomTetrimino ) );
 	gameObjects[ Bottom ].emplace_back( std::move( tetrimino ) );
 }
 

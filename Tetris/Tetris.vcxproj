@@ -121,12 +121,14 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PositionComponent.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Tetrimino.cpp" />
     <ClCompile Include="TetriminoBuilder.cpp" />
     <ClCompile Include="TetrisBoard.cpp" />
     <ClCompile Include="TetrisGame.cpp" />
+    <ClCompile Include="VelocityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Block.h" />
@@ -138,6 +140,7 @@
     <ClInclude Include="ComponentIDs.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GraphicsComponent.h" />
+    <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PositionComponent.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Tetrimino.h" />
@@ -145,6 +148,7 @@
     <ClInclude Include="TetriminoColors.h" />
     <ClInclude Include="TetrisBoard.h" />
     <ClInclude Include="TetrisGame.h" />
+    <ClInclude Include="VelocityComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
