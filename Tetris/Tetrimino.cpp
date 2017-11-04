@@ -11,17 +11,6 @@ Tetrimino::Tetrimino()
 	CreateBlockContainer();
 }
 
-void Tetrimino::Update( const sf::Time& elapsedTime )
-{
-	totalElapsedTime += elapsedTime;
-	if ( totalElapsedTime >= timeToUpdate )
-	{
-
-		totalElapsedTime -= timeToUpdate;
-	}
-	
-}
-
 void Tetrimino::CreateBlockContainer()
 {
 	AddComponent( std::make_unique< BlockContainerComponent >() );

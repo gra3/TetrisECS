@@ -1,10 +1,6 @@
 #include "TetrisBoard.h"
 
-TetrisBoard::TetrisBoard( sf::RenderWindow* window ) :
+TetrisBoard::TetrisBoard() :
 	GameObject{}
-{
-}
-
-void TetrisBoard::Update( const sf::Time& elapsedTime )
 {
 }

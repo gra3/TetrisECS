@@ -65,7 +65,7 @@ void TetrisGame::Start()
 
 void TetrisGame::CreateTetrisBoard()
 {
-	auto tetrisBoard = std::make_unique< TetrisBoard >( renderWindow.get() );
+	auto tetrisBoard = std::make_unique< TetrisBoard >();
 
 	auto positionComponent = std::make_unique< PositionComponent >( boardStartingPosition );
 	tetrisBoard->AddComponent( std::move( positionComponent ) );

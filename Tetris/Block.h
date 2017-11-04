@@ -9,8 +9,5 @@ class Block :
 {
 public:
 	Block();
-
-	//GameObject contract
-	virtual void Update( const sf::Time& elapsedTime ) override;
 };
 

@@ -11,9 +11,6 @@ class Tetrimino :
 public:
 	Tetrimino();
 
-	//GameObject contract
-	virtual void Update( const sf::Time& elapsedTime ) override;
-
 	void CreateBlockContainer();
 	void AddBlock( const sf::Vector2f& size, const sf::Vector2i& boardPosition, TetriminoColors color );
 
