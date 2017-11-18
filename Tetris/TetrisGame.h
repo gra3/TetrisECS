@@ -6,6 +6,8 @@
 
 #include "GameObject.h"
 
+class Tetrimino;
+
 class TetrisGame
 {
 public:
@@ -18,6 +20,10 @@ public:
 
 	sf::Vector2f GetStartingPosition() const;
 	int GetBorderThickness() const;
+
+	GameObject* GetActiveTetrimino() const;
+	void MoveBlocksOfActiveTetriminoAndDestroy();
+	void DestroyActiveTetrimino();
 
 private:
 	enum Zorder

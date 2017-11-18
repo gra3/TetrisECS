@@ -31,6 +31,19 @@ Component* GameObject::GetComponent( ComponentID componentID ) const
 	return desiredComponent;
 }
 
+void GameObject::RemoveComponent( ComponentID componentID )
+{
+	for ( auto it = components.begin(); it != components.end(); it++ )
+	{
+		if ( ( *it )->GetComponentID() == componentID )
+		{
+			components.erase( it );
+			componentMask -= componentID;
+			return;
+		}
+	}
+}
+
 void GameObject::Activate()
 {
 	isActive = true;

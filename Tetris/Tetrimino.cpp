@@ -2,6 +2,7 @@
 #include "BlockContainerComponent.h"
 #include "BlockGraphicsComponent.h"
 #include "BoardPositionComponent.h"
+#include "BodyComponent.h"
 #include "VelocityComponent.h"
 
 #include "Tetrimino.h"
@@ -29,7 +30,10 @@ void Tetrimino::AddBlock( const sf::Vector2f& size, const sf::Vector2i& boardPos
 		auto blockGraphicsComponent = std::make_unique< BlockGraphicsComponent >( size, color );
 		block->AddComponent( std::move( blockGraphicsComponent ) );
 
-		auto velocityComponent = std::make_unique< VelocityComponent >( sf::seconds( 1.0 ) );
+		auto bodyComponent = std::make_unique< BodyComponent >( size );
+		block->AddComponent( std::move( bodyComponent ) );
+
+		auto velocityComponent = std::make_unique< VelocityComponent >( sf::seconds( 0.25 ) );
 		block->AddComponent( std::move( velocityComponent ) );
 
 		blockContainerComponent->AddBlock( std::move( block ) );

@@ -6,10 +6,12 @@
 #include "BlockGraphicsComponent.h"
 #include "BoardGraphicsComponent.h"
 #include "BoardPositionComponent.h"
+#include "BodyComponent.h"
 #include "Component.h"
 #include "PhysicsSystem.h"
 #include "PositionComponent.h"
 #include "RenderSystem.h"
+#include "Tetrimino.h"
 #include "TetriminoBuilder.h"
 #include "TetriminoColors.h"
 #include "TetrisBoard.h"
@@ -33,7 +35,7 @@ void TetrisGame::Start()
 	CreateTetrimino();
 
 	RenderSystem renderSystem( this, renderWindow.get() );
-	PhysicsSystem physicsSystem;
+	PhysicsSystem physicsSystem( this );
 
 	sf::Clock clock;
 	clock.restart();
@@ -73,6 +75,10 @@ void TetrisGame::CreateTetrisBoard()
 	auto graphicsComponent = std::make_unique< BoardGraphicsComponent >( boardSize, GetBoardSizeInBlocks(), GetBorderThickness() );
 	tetrisBoard->AddComponent( std::move( graphicsComponent ) );
 
+	auto boardSizeFloat = sf::Vector2f( static_cast< int >( boardSize.x - borderThickness ), static_cast< int >( boardSize.y - borderThickness ) );
+	auto bodyComponent = std::make_unique< BodyComponent >( boardSizeFloat, false );
+	tetrisBoard->AddComponent( std::move( bodyComponent ) );
+
 	gameObjects[ Top ].emplace_back( std::move( tetrisBoard ) );
 }
 
@@ -104,4 +110,47 @@ sf::Vector2i TetrisGame::GetBoardSizeInBlocks() const
 int TetrisGame::GetBorderThickness() const
 {
 	return borderThickness;
+}
+
+GameObject* TetrisGame::GetActiveTetrimino() const
+{
+	for ( auto& object : gameObjects[ Bottom ] )
+	{
+		auto componentMask = object->GetComponentMask();
+		if( componentMask == Container )
+			return object.get();
+	}
+
+	return nullptr;
+}
+
+void TetrisGame::MoveBlocksOfActiveTetriminoAndDestroy()
+{
+	auto tetrimino = GetActiveTetrimino();
+	auto blockContainer = dynamic_cast< BlockContainerComponent* >( tetrimino->GetComponent( Container ) );
+	auto blocks = blockContainer->GetBlocks();
+
+	for ( auto& block : *blocks )
+	{
+		block->RemoveComponent( Velocity );
+		gameObjects[ Bottom ].emplace_back( std::move( block ) );
+	}
+
+	DestroyActiveTetrimino();
+
+	CreateTetrimino();
+}
+
+void TetrisGame::DestroyActiveTetrimino()
+{
+	auto it = gameObjects[ Bottom ].begin();
+	for ( auto it = gameObjects[ Bottom ].begin(); it != gameObjects[ Bottom ].end(); it++ )
+	{
+		auto componentMask = ( *it ).get()->GetComponentMask();
+		if( componentMask == Container )
+		{
+			gameObjects[Bottom].erase( it );
+			return;
+		}
+	}
 }

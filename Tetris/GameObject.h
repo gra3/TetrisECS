@@ -16,6 +16,7 @@ public:
 	UINT GetComponentMask() const;
 	void AddComponent( std::unique_ptr< Component > component );
 	Component* GetComponent( ComponentID componentID ) const;
+	void RemoveComponent( ComponentID componentID );
 
 	void Activate();
 	void Deactivate();

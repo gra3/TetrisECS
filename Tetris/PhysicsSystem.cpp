@@ -1,27 +1,43 @@
 #include "BlockContainerComponent.h"
 #include "BoardPositionComponent.h"
+#include "TetrisGame.h"
 #include "VelocityComponent.h"
 
 #include "PhysicsSystem.h"
 
-PhysicsSystem::PhysicsSystem()
+PhysicsSystem::PhysicsSystem( TetrisGame* game ) :
+	tetrisGame{ game },
+	collisionSystem{ game },
+	stop{ false }
 {
 }
 
 void PhysicsSystem::DoPhysics( std::vector< std::vector< std::unique_ptr< GameObject > > >& gameObjects, const sf::Time& elapsedTime )
 {
+	stop = false;
 	for ( auto& layer : gameObjects )
 	{
+		if ( stop )
+			return;
+
 		for ( auto& obj : layer )
 		{
-			HandlePhysics( obj.get(), elapsedTime );
+			if ( !stop )
+			{
+				HandlePhysics( obj.get(), elapsedTime, gameObjects );
 
-			HandlePhysicsForAllContainedObjects( obj.get(), elapsedTime );
+				HandlePhysicsForAllContainedObjects( obj.get(), elapsedTime, gameObjects );
+				if ( stop )
+					return;
+			}
+			else return;
 		}
 	}
+
+	stop = false;
 }
 
-void PhysicsSystem::HandlePhysics( const GameObject* obj, const sf::Time& elapsedTime )
+void PhysicsSystem::HandlePhysics( const GameObject* obj, const sf::Time& elapsedTime, std::vector< std::vector< std::unique_ptr< GameObject > > >& gameObjects )
 {
 	if ( HasPositionAndVelocityComponents( obj ) )
 	{
@@ -36,6 +52,13 @@ void PhysicsSystem::HandlePhysics( const GameObject* obj, const sf::Time& elapse
 			auto y = positionComponent->GetY();
 			positionComponent->SetY( y + 1 );
 
+			if ( collisionSystem.DetectCollision( obj, gameObjects ) )
+			{
+				positionComponent->SetY( y );
+				tetrisGame->MoveBlocksOfActiveTetriminoAndDestroy();
+				stop = true;
+			}
+
 			totalElapsedTime -= timeToUpdate;
 		}
 
@@ -43,14 +66,20 @@ void PhysicsSystem::HandlePhysics( const GameObject* obj, const sf::Time& elapse
 	}
 }
 
-void PhysicsSystem::HandlePhysicsForAllContainedObjects( const GameObject* obj, const sf::Time& elapsedTime )
+void PhysicsSystem::HandlePhysicsForAllContainedObjects( const GameObject* obj, const sf::Time& elapsedTime, std::vector< std::vector< std::unique_ptr< GameObject > > >& gameObjects )
 {
 	if ( HasContainerComponent( obj ) )
 	{
 		auto blockContainer = dynamic_cast< BlockContainerComponent* >( obj->GetComponent( Container ) );
 		auto blocks = blockContainer->GetBlocks();
+		std::vector< Block* > rawBlockPointers;
 		for ( auto& block : *blocks )
-			HandlePhysics( dynamic_cast< GameObject* >( block.get() ), elapsedTime );
+			rawBlockPointers.emplace_back( block.get() );
+		for ( auto block : rawBlockPointers )
+		{
+			if( !stop )
+				HandlePhysics( dynamic_cast< GameObject* >( block ), elapsedTime, gameObjects );
+		}
 	}
 }
 
